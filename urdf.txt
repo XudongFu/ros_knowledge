@@ -1,0 +1,133 @@
+<joint name="my_joint" type="floating">    关节的名称、类型
+    <origin xyz="0 0 1" rpy="0 0 3.1416"/>    变换矩阵：位置、角度
+    <parent link="link1"/>  关节连接的父连杆
+    <child link="link2"/>   关节连接的子连杆
+
+    <calibration rising="0.0"/>
+    <dynamics damping="0.0" friction="0.0"/>    阻尼、静摩擦
+    <limit effort="30" velocity="1.0" lower="-2.2" upper="0.7" />   极限值：最大力矩、最大速度、关节下限、关节上限
+    <safety_controller k_velocity="10" k_position="15" soft_lower_limit="-2.0" 
+
+soft_upper_limit="0.5" />   
+ </joint>
+属性
+
+1、name (required)
+
+定义关节的名字（唯一）
+
+2、type (required)
+
+定义关节类型，可选项有：
+
+revolute - 旋转关节，其极限位置由 upper and lower limits 决定
+
+continuous - 旋转关节，无位置限制
+
+prismatic - 滑动关节，其极限位置由 upper and lower limits 决定
+
+fixed - 虚拟关节，关节不可运动
+
+floating - 六自由度关节
+
+planar - 平面关节
+
+组件
+
+< origin> (optional: defaults to identity if not specified)
+
+父连杆和子连杆的转换矩阵。关节位于子连杆的坐标原点处，
+
+xyz
+描述 x,y,z 坐标的偏置量
+
+rpy
+描述绕固定轴的旋转量，按照 x,y,z 轴的顺序。
+
+< parent> (required)
+
+父连杆
+
+link
+父连杆的名字
+
+< child>(required)
+
+子连杆
+
+link
+子连杆的名字
+
+< axis>(optional: defaults to (1,0,0))
+
+关节坐标系中，关节轴的坐标。
+
+xyz
+关节轴的描述（正交向量）
+
+< calibration> (optional)
+
+关节的参考位置，用来校准关节的绝对位置
+
+rising (optional)
+关节正向运动，参考位置出发上升沿
+
+falling (optional)
+关节反向运动，参考位置出发下降沿
+
+< dynamics> (optional)
+
+描述关节的物理属性。经常用来详述建模属性，特别是对仿真必不可少
+
+damping (optional, defaults to 0)
+关节的物理阻尼值
+
+friction (optional, defaults to 0)
+关节的物理静摩擦力
+
+< limit> (required only for revolute and prismatic joint)
+
+用来描述运动的一些极限值
+
+lower (optional, defaults to 0)
+关节位置下限
+
+upper (optional, defaults to 0)
+关节位置上限
+
+effort (required)
+关节的最大力矩
+
+velocity (required)
+关节的最大速度
+
+< mimic> (optional)
+
+用来描述现在定义的关节与已经存在的关节的关系 
+其值可以用下式计算: 
+value=multiplier∗otherjointvalue+offset
+value=multiplier∗otherjointvalue+offset
+joint (required)
+被模仿的关节名称
+
+multiplier (optional)
+乘积因子的数值，默认1
+
+offset (optional)
+偏置量，默认0
+
+< safety_controller> (optional)
+
+描述安全控制器参数
+
+soft_lower_limit (optional, defaults to 0)
+安全控制器运行时，关节的位置极限下界，其值应大于 lower joint limit
+
+soft_upper_limit (optional, defaults to 0)
+安全控制器运行时，关节的位置极限上界，其值应小于 upper joint limit
+
+k_position (optional, defaults to 0)
+位置和速度极限之间的关系
+
+k_velocity (required)
+力矩和速度之间的关系
